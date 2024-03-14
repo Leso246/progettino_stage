@@ -7,10 +7,10 @@ export class WrongEmailError extends Error {
     }
 } 
 
-export class ValidationError extends Error {
+export class AlreadyExistingEmailError extends Error {
     constructor(message) {
         super(message)
         this.name = this.constructor.name;
-        this.status = 400;
+        this.status = 409;
     }
 }

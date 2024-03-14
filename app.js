@@ -17,8 +17,6 @@ fastify.post('/register', {
   handler: loginController.registerHandler
 })
 
-fastify.post('/register', loginController.registerHandler)
-
 fastify.post('/login', loginController.loginHandler)
 fastify.delete('/delete', loginController.deleteHandler)
 
