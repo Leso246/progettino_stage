@@ -6,13 +6,14 @@ import { requestSchema } from "../schemas.js";
 /**
  * @param {JSON} request
  * @returns {string} User was succesfully created
- * @throws {Error} somethign went wrong
+ * @throws {Error} something went wrong
  */
 export function registerUser(request) {
   // Validate request body
   try {
     requestSchema.validate(request.body);
   } catch (error) {
+    console.log(error);
     throw new Errors.ValidationError("Invalid json body");
   }
 

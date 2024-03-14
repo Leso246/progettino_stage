@@ -11,7 +11,7 @@ export async function registerHandler(request, response){
     const result = registerUser(request);
     return response.status(201).send({ message: result});
   } catch (error) {
-    return response.status(400).send({ error: error.message})
+    return response.status(error.status).send({ error: error.message})
   }
 }
 
