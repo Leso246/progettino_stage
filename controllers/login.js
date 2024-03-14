@@ -15,7 +15,6 @@ export async function registerHandler(request, response){
   }
 }
 
-
 /**
  * @param {Request} request
  * @param {Response} response

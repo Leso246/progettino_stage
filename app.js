@@ -1,6 +1,5 @@
 import Fastify from 'fastify'
 import * as loginController from "./controllers/login.js"
-import * as Schemas from "./schemas.js"
 
 /**
  * 
@@ -10,13 +9,8 @@ const fastify = Fastify({
   logger: true
 })
 
-fastify.post('/register', {
-  schema: {
-    body: Schemas.requestSchema,
-  },
-  handler: loginController.registerHandler
-})
 
+fastify.post('/register', loginController.registerHandler)
 fastify.post('/login', loginController.loginHandler)
 fastify.delete('/delete', loginController.deleteHandler)
 
