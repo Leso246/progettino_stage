@@ -6,6 +6,7 @@ Il server deve essere in grado di salvare i dati in un file JSON sul file system
 Gli utenti si possono registrare con email e password, quest'ultima dev'essere salvata nel json dopo essere stata hashata con l’algoritmo SHA256. In fase di login vanno confrontati gli hash della password passata dal client e l’hash salvato in modo da verificare la correttezza della password.
 I dati che vogliamo salvare sono stringhe codificate in base64 alla quale viene associata una chiave, per esempio il body della chiamata POST /data sarà:
 { key: “joseph.txt”, data: “SXMgdGhpcyBhIEpvSm8gcmVmZXJlbmNlPw==” }
+**spoiler: è una JoJo's reference (d'altronde sono ovunque)**
 Gli errori vanno gestiti in maniera adeguata, se chiamo una API protetta senza essere loggato devo ricevere un errore 403, mentre se provo a fare una GET di una chiave che non esiste devo ricevere un 404.
 Deve esistere un utente con poteri di superuser, in grado di poter accedere e modificare i dati di tutti gli altri utenti. Per gestire questa casistica ti consigliamo di utilizzare il JWT per includere dei dati aggiuntivi, come in questo caso un “ruolo” (vedi i link per la documentazione sotto).
 

@@ -2,7 +2,9 @@ import fs from "fs";
 import * as Errors from "../errors.js"
 
 /**
- * @param {JSON} request
+ * @param {string} email 
+ * @param {string} hashedPassword 
+ * @param {boolean} admin
  * @returns {string} User was succesfully created
  * @throws {Error} something went wrong
  */
