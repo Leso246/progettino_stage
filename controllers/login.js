@@ -93,7 +93,11 @@ export async function postDataHandler(request, response) {
     // Retrieve user email from token
     const userEmail = decoded.email;
 
-    const { email: targetEmail, key, data } = request.body;
+    let { email: targetEmail, key, data } = request.body;
+
+    console.log(data);
+    data = encodeToBase64(data);
+    console.log(data);
 
     let result = undefined;
 
@@ -111,6 +115,19 @@ export async function postDataHandler(request, response) {
 
   } catch (error) {
     return response.status(error.status).send({ error: error.message });
+  }
+}
+
+/**
+ * @param {string} str 
+ * @returns {string} string
+ */
+function encodeToBase64(str) {
+  try {  
+    atob(str);
+    return str;
+  } catch (err) {
+    return btoa(str);
   }
 }
 
