@@ -11,6 +11,7 @@ const fastify = Fastify({
   logger: true
 })
 
+
 fastify.post('/register', {
   schema: {
     body: Schemas.registerSchema,
@@ -25,12 +26,9 @@ fastify.post('/login', {
   handler: loginController.loginHandler
 })
 
-fastify.delete('/delete', loginController.deleteHandler)
+fastify.delete('/delete', loginController.deleteHandler);
 
-// Cosine da guardare:
-// - Middleware per check dell'autenticazione
-// - Middleware per la gestione degli errori, NOT_FOUND_ERROR, UNATHORIZED_ERROR 
-// 
+fastify.post('/data', loginController.postDataHandler); 
 
 // Run the server!
 try {

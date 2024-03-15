@@ -8,15 +8,14 @@ import jwt from 'jsonwebtoken';
  * @returns { string } jwt token
  */
 export function loginUser(email, hashedPassword) {
-
     // Read the JSON file with users
     let users = [];
 
     try {
-        const userData = fs.readFileSync("users.json", "utf8");
+        const userData = fs.readFileSync("./db/users.json", "utf8");
         users = JSON.parse(userData);
     } catch (error) {
-        return new Error("Error while reading JSON file");
+        throw new Error("Error while reading JSON file");
     }
 
     // Find the correct user
@@ -41,6 +40,6 @@ export function loginUser(email, hashedPassword) {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options);
-
+ 
     return token;
 }

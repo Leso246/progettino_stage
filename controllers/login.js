@@ -38,7 +38,6 @@ export async function registerHandler(request, response){
  * @returns {Response} http response
  */
 export async function loginHandler(request, response){
-  
   const { email, password } = request.body;
 
   // Check if the email is valid
@@ -53,6 +52,7 @@ export async function loginHandler(request, response){
     const token = loginUser(email, hashedPassword);
     return response.status(200).send({ message: token});
   } catch (error) {
+    console.log("ERROR" + error)
     return response.status(error.status).send({ error: error.message})
   }
 
@@ -71,6 +71,25 @@ export async function deleteHandler(request, response){
     const result = deleteUser(decoded.email);
 
     return response.status(200).send({ message: result});
+
+  } catch (error) {
+    return response.status(error.status).send({ error: error.message });
+  }
+}
+
+/**
+ * @param {Request} request 
+ * @param {Response} response 
+ */
+export async function postDataHandler(request, response) {
+  try {
+    const decoded = decodeToken(request);
+
+    const email = decoded.email;
+
+    const { key, data } = request.body;
+
+    console.log("EMAIL " + email + " key " + key + " data " + data);
 
   } catch (error) {
     return response.status(error.status).send({ error: error.message });
