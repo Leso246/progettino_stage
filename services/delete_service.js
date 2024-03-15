@@ -2,6 +2,7 @@ import fs from "fs";
 
 /**
  *@param {string} email 
+ @returns {Response} response
  */
 export function deleteUser(email) {
 
@@ -23,5 +24,4 @@ export function deleteUser(email) {
     } catch (error) {
         return new Error("Error while writing to JSON file");
     }
-
 }

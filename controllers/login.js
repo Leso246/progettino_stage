@@ -41,8 +41,6 @@ export async function loginHandler(request, response){
   
   const { email, password } = request.body;
 
-  console.log("JWTTTTTTTTT" + process.env.JWT_SECRET_KEY);
-
   // Check if the email is valid
   if (!isValidEmail(email)) {
     throw new Errors.WrongEmailError("Email addres is not valid");
