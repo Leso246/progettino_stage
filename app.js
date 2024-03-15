@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import * as loginController from "./controllers/login.js"
 import * as Schemas from "./schemas.js"
+import 'dotenv/config';
 
 /**
  * 
@@ -12,12 +13,18 @@ const fastify = Fastify({
 
 fastify.post('/register', {
   schema: {
-    body: Schemas.requestSchema,
+    body: Schemas.registerSchema,
   },
   handler: loginController.registerHandler
 })
 
-fastify.post('/login', loginController.loginHandler)
+fastify.post('/login', {
+  schema: {
+    body: Schemas.loginSchema,
+  },
+  handler: loginController.loginHandler
+})
+
 fastify.delete('/delete', loginController.deleteHandler)
 
 // Cosine da guardare:

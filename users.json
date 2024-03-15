@@ -1,1 +1,17 @@
-[{"email":"feetdsdv@gmail.com","password":"0b2580405d12ac9df8a71057e7d220e4fecb40257c1baf1cfa1f4c9a03c913d0","admin":true}]
+[
+  {
+    "email": "user1@example.com",
+    "password": "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e",
+    "admin": false
+  },
+  {
+    "email": "admin2@example.com",
+    "password": "f2414955bb915be77a03ba13b08e7196a1a6d8f6a23b8fa5cdfacdab1aba4c0c",
+    "admin": true
+  },
+  {
+    "email": "admin4@example.com",
+    "password": "d0c7c763d972dd637e9e6f1e6972a34caf789b09fa05f74d54e78b54139b7212",
+    "admin": true
+  }
+]

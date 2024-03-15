@@ -1,5 +1,5 @@
 // Schema for register
-export const requestSchema = {
+export const registerSchema = {
     type: 'object',
     properties: {
         email: { type: 'string' },
@@ -7,4 +7,14 @@ export const requestSchema = {
         admin: { type: 'boolean' }
     },
     required: ['email', 'password', 'admin']
+};
+
+// Schema for login
+export const loginSchema = {
+    type: 'object',
+    properties: {
+        email: { type: 'string' },
+        password: { type: 'string' }
+    },
+    required: ['email', 'password']
 };

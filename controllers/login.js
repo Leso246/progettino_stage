@@ -1,6 +1,10 @@
 import crypto from "crypto";
 import { registerUser } from "../services/register_service.js"
+import { loginUser } from "../services/login_service.js";
 import * as Errors from "../errors.js"
+import jwt from 'jsonwebtoken';
+import { deleteUser } from "../services/delete_service.js";
+
 
 // Register controller
 /**
@@ -23,7 +27,55 @@ export async function registerHandler(request, response){
     const result = registerUser(email, hashedPassword, admin);
     return response.status(201).send({ message: result});
   } catch (error) {
+    return response.status(error.status).send({ error: error.message});
+  }
+}
+
+// Login controller
+/**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Response} http response
+ */
+export async function loginHandler(request, response){
+  
+  const { email, password } = request.body;
+
+  console.log("JWTTTTTTTTT" + process.env.JWT_SECRET_KEY);
+
+  // Check if the email is valid
+  if (!isValidEmail(email)) {
+    throw new Errors.WrongEmailError("Email addres is not valid");
+  }
+
+  // Hash the password
+  const hashedPassword = hashPassword(password);
+
+  try {
+    const token = loginUser(email, hashedPassword);
+    return response.status(200).send({ message: token});
+  } catch (error) {
     return response.status(error.status).send({ error: error.message})
+  }
+
+}
+
+/**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Response} response
+ */
+export async function deleteHandler(request, response){
+
+  try {   
+    const decoded = decodeToken(request);
+
+    const result = deleteUser(decoded.email);
+
+    return response.status(200).send({ message: result});
+
+  } catch (error) {
+    return response.status(error.status).send({ error: error.message });
   }
 }
 
@@ -45,20 +97,25 @@ function hashPassword(password) {
 }
 
 /**
- * @param {Request} request
- * @param {Response} response
+ * @param {Request} request 
+ * @returns {token} decodedToken
  */
-export async function loginHandler(request, response){
-  // Validazione body
+function decodeToken(request) {
+  // Retrieve the header
+  const authHeader = request.headers['authorization'];
 
-  // body
-}
+  // Check if the header is present
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new Errors.MissingTokenError('Authorization header missing or invalid');
+  }
 
+  // Retrieve the token
+  const token = authHeader.split(' ')[1];
 
-/**
- * @param {Request} request
- * @param {Response} response
- */
-export async function deleteHandler(request, response){
-
+  try {
+    // Verify the token
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    throw new Errors.InvalidTokenError("Invalid token");
+  }
 }

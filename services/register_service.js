@@ -34,7 +34,7 @@ export function registerUser(email, hashedPassword, admin) {
   users.push(newUser);
 
   // Write users array back to file
-  fs.writeFileSync("users.json", JSON.stringify(users));
+  fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
 
   return "User succesfully created";
 }
