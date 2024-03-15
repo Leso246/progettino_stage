@@ -28,7 +28,14 @@ fastify.post('/login', {
 
 fastify.delete('/delete', loginController.deleteHandler);
 
-fastify.post('/data', loginController.postDataHandler); 
+fastify.post('/data', {
+  schema: {
+    body: Schemas.postDataSchema,
+  },
+  handler: loginController.postDataHandler
+})
+
+//fastify.post('/data', loginController.postDataHandler); 
 
 // Run the server!
 try {

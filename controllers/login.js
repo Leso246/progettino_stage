@@ -4,6 +4,8 @@ import { loginUser } from "../services/login_service.js";
 import * as Errors from "../errors.js"
 import jwt from 'jsonwebtoken';
 import { deleteUser } from "../services/delete_service.js";
+import { postData } from "../services/post_data_service.js";
+import { error } from "console";
 
 
 // Register controller
@@ -80,16 +82,32 @@ export async function deleteHandler(request, response){
 /**
  * @param {Request} request 
  * @param {Response} response 
+ * @returns { Response } response 
  */
 export async function postDataHandler(request, response) {
   try {
+
+    // Verify the token
     const decoded = decodeToken(request);
 
-    const email = decoded.email;
+    // Retrieve user email from token
+    const userEmail = decoded.email;
 
-    const { key, data } = request.body;
+    const { email: targetEmail, key, data } = request.body;
 
-    console.log("EMAIL " + email + " key " + key + " data " + data);
+    let result = undefined;
+
+    if(targetEmail !== undefined) {
+      if(decoded.admin || userEmail === targetEmail) {
+        result = postData(targetEmail, key, data);
+      } else {
+        return response.status(403).send({message: "Access denied"});
+      }
+    } else {
+      result = postData(userEmail, key, data);
+    }
+
+    return response.status(201).send({ message: result});
 
   } catch (error) {
     return response.status(error.status).send({ error: error.message });

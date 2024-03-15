@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "email": "simolesi02@gmail.com",
+    "data": []
+  },
+  {
+    "email": "simolesi03@gmail.com",
+    "data": [
+      {
+        "key": "jolyne.txt",
+        "data": "is this a jojo's reference wdadwadwadwad?"
+      },
+      {
+        "key": "jolyne.txt",
+        "data": "is this a jojo's reference wdadwadwadwad?"
+      }
+    ]
+  }
+]

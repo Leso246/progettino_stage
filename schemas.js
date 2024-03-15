@@ -18,3 +18,14 @@ export const loginSchema = {
     },
     required: ['email', 'password']
 };
+
+// Schema for post data
+export const postDataSchema = {
+    type: 'object',
+    properties: {
+        email: { type: 'string' },
+        key: { type: 'string' },
+        data: { type: 'string' }
+    },
+    required: ['key', 'data']
+};
