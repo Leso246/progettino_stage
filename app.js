@@ -38,6 +38,8 @@ fastify.post('/postData', {
 
 fastify.get('/getData/:key/:email?', dataController.getDataHandler);
 
+fastify.delete('/deleteData/:key/:email?', dataController.deleteDataHandler);
+
 // Run the server!
 try {
   await fastify.listen({ port: 3000 })

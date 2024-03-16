@@ -62,6 +62,14 @@ export class KeyNotFoundError extends Error {
     }
 }
 
+export class MissingKeyError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = this.constructor.name;
+        this.status = 400;
+    }
+}
+
 export class AlreadyExistingKeyError extends Error {
     constructor(message) {
         super(message)

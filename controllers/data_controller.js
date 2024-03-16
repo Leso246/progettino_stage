@@ -1,6 +1,7 @@
 import { decodeToken } from "../helper.js";
 import { postData } from "../services/post_data_service.js";
 import { getData } from "../services/get_data_service.js";
+import { deleteData } from "../services/delete_data_service.js";
 import * as Errors from "../errors.js";
 
 /**
@@ -33,7 +34,7 @@ export async function postDataHandler(request, response) {
       result = postData(userEmail, key, data);
     }
 
-    return response.status(201).send({ message: result});
+    return response.status(201).send(result);
 
   } catch (error) {
     return response.status(error.status).send({ error: error.message });
@@ -49,7 +50,7 @@ export async function getDataHandler(request, response) {
   const { key, email: targetEmail } = request.params;
 
   if(!key) {
-    return response.code(400).send({success: false, message: "Missing key parameter"});
+    return new Errors.MissingKeyError("Missing key parameter");
   }
 
   // Verify the token
@@ -67,10 +68,40 @@ export async function getDataHandler(request, response) {
       return new Errors.AccessDeniedError("Access denied");
     }
   } else {
-    result =getData(userEmail, key);
+    result = getData(userEmail, key);
   }
 
   return response.status(201).send(result);
+}
+
+/**
+ * @param {request} request 
+ * @param {response} response 
+ */
+export async function deleteDataHandler(request, response) {
+  const { key, email: targetEmail } = request.params;
+
+  if(!key) {
+    return new Errors.MissingKeyError("Missing key parameter");
+  }
+
+  // Verify the token
+  const decoded = decodeToken(request);
+
+  let result;
+
+  if(targetEmail !== undefined) {
+    if(decoded.admin || decoded.email === targetEmail) {
+      result = deleteData(targetEmail, key);
+    } else {
+      throw new Errors.AccessDeniedError("Access denied");
+    }
+  } else {
+    result = deleteData(decoded.email, key);
+  }
+
+  return response.status(201).send(result);
+
 }
 
 /**

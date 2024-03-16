@@ -25,7 +25,7 @@ export async function registerHandler(request, response){
 
   try {
     const result = registerUser(email, hashedPassword, admin);
-    return response.status(201).send({ message: result});
+    return response.status(201).send(result);
   } catch (error) {
     return response.status(error.status).send({ error: error.message});
   }
@@ -50,7 +50,7 @@ export async function loginHandler(request, response){
 
   try {
     const token = loginUser(email, hashedPassword);
-    return response.status(200).send({ message: token});
+    return response.status(200).send(token);
   } catch (error) {
     console.log("ERROR" + error)
     return response.status(error.status).send({ error: error.message})
@@ -70,7 +70,7 @@ export async function deleteHandler(request, response){
 
     const result = deleteUser(decoded.email);
 
-    return response.status(200).send({ message: result});
+    return response.status(200).send(result);
 
   } catch (error) {
     return response.status(error.status).send({ error: error.message });
