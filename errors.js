@@ -53,3 +53,11 @@ export class AccessDeniedError extends Error {
         this.status = 403;
     }
 }
+
+export class KeyNotFoundError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = this.constructor.name;
+        this.status = 404;
+    }
+}

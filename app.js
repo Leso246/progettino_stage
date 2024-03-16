@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
-import * as loginController from "./controllers/login.js"
+import * as usersController from "./controllers/users_controller.js"
+import * as dataController from "./controllers/data_controller.js"
 import * as Schemas from "./schemas.js"
 import 'dotenv/config';
 
@@ -16,26 +17,26 @@ fastify.post('/register', {
   schema: {
     body: Schemas.registerSchema,
   },
-  handler: loginController.registerHandler
-})
+  handler: usersController.registerHandler
+});
 
 fastify.post('/login', {
   schema: {
     body: Schemas.loginSchema,
   },
-  handler: loginController.loginHandler
-})
+  handler: usersController.loginHandler
+});
 
-fastify.delete('/delete', loginController.deleteHandler);
+fastify.delete('/delete', usersController.deleteHandler);
 
-fastify.post('/data', {
+fastify.post('/postData', {
   schema: {
     body: Schemas.postDataSchema,
   },
-  handler: loginController.postDataHandler
-})
+  handler: dataController.postDataHandler
+});
 
-//fastify.post('/data', loginController.postDataHandler); 
+fastify.get('/getData/:key/:email?', dataController.getDataHandler);
 
 // Run the server!
 try {
