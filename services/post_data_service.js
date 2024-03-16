@@ -25,6 +25,10 @@ export function postData(userEmail, key, data) {
         throw new Errors.UserNotFoundError("User not found");
     }
 
+    if(user.data.find(obj => obj.key === key)) {
+        throw new Errors.AlreadyExistingKeyError("This key already exists");
+    }
+
     const dataToPush = {
         key: key,
         data: data
