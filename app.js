@@ -38,6 +38,13 @@ fastify.post('/postData', {
 
 fastify.get('/getData/:key/:email?', dataController.getDataHandler);
 
+fastify.patch('/patchData/:key/:email?', {
+  schema: {
+    body: Schemas.patchDataSchema,
+  },
+  handler: dataController.patchDataHandler
+});
+
 fastify.delete('/deleteData/:key/:email?', dataController.deleteDataHandler);
 
 // Run the server!

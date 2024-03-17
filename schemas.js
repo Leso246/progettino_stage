@@ -29,3 +29,11 @@ export const postDataSchema = {
     },
     required: ['key', 'data']
 };
+
+export const patchDataSchema = {
+    type: 'object',
+    properties: {
+        data: { type: 'string' }
+    },
+    required: ['data']
+};

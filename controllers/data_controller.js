@@ -1,6 +1,7 @@
 import { decodeToken } from "../helper.js";
 import { postData } from "../services/post_data_service.js";
 import { getData } from "../services/get_data_service.js";
+import { patchData } from "../services/patch_data_service.js";
 import { deleteData } from "../services/delete_data_service.js";
 import * as Errors from "../errors.js";
 
@@ -75,8 +76,44 @@ export async function getDataHandler(request, response) {
 }
 
 /**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {*} response  
+ */
+export async function patchDataHandler(request, response) {
+  const { key, email: targetEmail } = request.params;
+  let newData = request.body.data;
+
+  newData = encodeToBase64(newData);
+
+  if(!key) {
+    return new Errors.MissingKeyError("Missing key parameter");
+  }
+
+  // Verify the token
+  const decoded = decodeToken(request);
+
+  let result;
+
+  if(targetEmail !== undefined) {
+    if(decoded.admin || decoded.email === targetEmail) {
+      result = patchData(targetEmail, key, newData);
+    } else {
+      throw new Errors.AccessDeniedError("Access denied");
+    }
+  } else {
+    result = patchData(decoded.email, key, newData);
+  }
+
+  return response.status(200).send(result);
+
+}
+
+
+/**
  * @param {request} request 
  * @param {response} response 
+ * @returns {*} response
  */
 export async function deleteDataHandler(request, response) {
   const { key, email: targetEmail } = request.params;
