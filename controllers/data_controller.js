@@ -72,7 +72,7 @@ export async function getDataHandler(request, response) {
     result = getData(userEmail, key);
   }
 
-  return response.status(201).send({result: result, status: 201});
+  return response.status(200).send({result: result, status: 200});
 }
 
 /**
