@@ -35,10 +35,10 @@ export async function postDataHandler(request, response) {
       result = postData(userEmail, key, data);
     }
 
-    return response.status(201).send(result);
+    return response.status(201).send({result: result, status: 201});
 
   } catch (error) {
-    return response.status(error.status).send({ error: error.message });
+    return response.status(error.status).send({ error: error.message, status: error.status });
   }
 }
 
@@ -51,7 +51,7 @@ export async function getDataHandler(request, response) {
   const { key, email: targetEmail } = request.params;
 
   if(!key) {
-    return new Errors.MissingKeyError("Missing key parameter");
+    throw new Errors.MissingKeyError("Missing key parameter");
   }
 
   // Verify the token
@@ -66,13 +66,13 @@ export async function getDataHandler(request, response) {
     if(decoded.admin || targetEmail === userEmail) {
       result = getData(targetEmail, key);
     } else {
-      return new Errors.AccessDeniedError("Access denied");
+      throw new Errors.AccessDeniedError("Access denied");
     }
   } else {
     result = getData(userEmail, key);
   }
 
-  return response.status(201).send(result);
+  return response.status(201).send({result: result, status: 201});
 }
 
 /**
@@ -87,7 +87,7 @@ export async function patchDataHandler(request, response) {
   newData = encodeToBase64(newData);
 
   if(!key) {
-    return new Errors.MissingKeyError("Missing key parameter");
+    throw new Errors.MissingKeyError("Missing key parameter");
   }
 
   // Verify the token
@@ -105,7 +105,7 @@ export async function patchDataHandler(request, response) {
     result = patchData(decoded.email, key, newData);
   }
 
-  return response.status(200).send(result);
+  return response.status(200).send({result: result, status: 200});
 
 }
 
@@ -137,7 +137,7 @@ export async function deleteDataHandler(request, response) {
     result = deleteData(decoded.email, key);
   }
 
-  return response.status(201).send(result);
+  return response.status(201).send({result: result, status: 201});
 
 }
 
@@ -152,4 +152,4 @@ function encodeToBase64(str) {
     } catch (err) {
       return btoa(str);
     }
-  }
+}

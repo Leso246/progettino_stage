@@ -14,7 +14,7 @@ export function deleteUser(email) {
         const userData = fs.readFileSync("./db/users.json", "utf8");
         users = JSON.parse(userData);
     } catch (error) {
-        return new Error("Error while reading JSON file");
+        throw new Error("Error while reading JSON file");
     }
 
     const filteredUsers = users.filter(user => user.email != email);
@@ -22,7 +22,7 @@ export function deleteUser(email) {
     try {
         fs.writeFileSync("./db/users.json", JSON.stringify(filteredUsers, null, 2));
     } catch (error) {
-        return new Error("Error while writing to JSON file");
+        throw new Error("Error while writing to JSON file");
     }
 
     // Delete data from data.json
@@ -32,7 +32,7 @@ export function deleteUser(email) {
         const usersData = fs.readFileSync("./db/data.json", "utf8");
         arrData = JSON.parse(usersData);
     } catch (error) {
-        return new Error("Error while reading JSON file");
+        throw new Error("Error while reading JSON file");
     }
 
     const filteredUsersData = arrData.filter(user => user.email != email);
@@ -41,6 +41,6 @@ export function deleteUser(email) {
         fs.writeFileSync("./db/data.json", JSON.stringify(filteredUsersData, null, 2));
         return "User succesfully deleted";
     } catch (error) {
-        return new Error("Error while writing to JSON file");
+        throw new Error("Error while writing to JSON file");
     }
 }

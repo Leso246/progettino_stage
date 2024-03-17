@@ -4,7 +4,8 @@ import * as Errors from '../errors.js'
 /**
  * @param {string} userEmail 
  * @param {string} key 
- * @param {string} newData 
+ * @param {string} newData
+ * @returns {*} response 
  */
 export function patchData(userEmail, key, newData) {
     // Read the JSON file with users data

@@ -22,11 +22,11 @@ export function loginUser(email, hashedPassword) {
     const user = users.find(user => user.email === email);
 
     if(!user) {
-        return new Errors.UserNotFoundError("User not found");
+        throw new Errors.UserNotFoundError("User not found");
     }
 
     if(hashedPassword != user.password){
-        return new Errors.InvalidPasswordError("Invalid password");
+        throw new Errors.InvalidPasswordError("Invalid password");
     }
 
     // Everything is fine, generate JWT token

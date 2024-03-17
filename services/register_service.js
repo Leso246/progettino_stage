@@ -20,7 +20,7 @@ export function registerUser(email, hashedPassword, admin) {
     if (error.code === 'ENOENT') {
       // File doesn't exist or empty, continue with empty users array
     } else {
-      // Unexpected error, log or handle appropriately
+      // Unexpected error
       throw new Error(`Failed to read users data: ${error.message}`);
     }
   }

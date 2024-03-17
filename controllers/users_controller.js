@@ -25,9 +25,9 @@ export async function registerHandler(request, response){
 
   try {
     const result = registerUser(email, hashedPassword, admin);
-    return response.status(201).send(result);
+    return response.status(201).send({result: result, status: 201});
   } catch (error) {
-    return response.status(error.status).send({ error: error.message});
+    return response.status(error.status).send({ error: error.message, status: error.status});
   }
 }
 
@@ -42,7 +42,7 @@ export async function loginHandler(request, response){
 
   // Check if the email is valid
   if (!isValidEmail(email)) {
-    throw new Errors.WrongEmailError("Email addres is not valid");
+    throw new Errors.WrongEmailError("Email address is not valid");
   }
 
   // Hash the password
@@ -50,10 +50,9 @@ export async function loginHandler(request, response){
 
   try {
     const token = loginUser(email, hashedPassword);
-    return response.status(200).send(token);
+    return response.status(200).send({ jwt: token, status: 200});
   } catch (error) {
-    console.log("ERROR" + error)
-    return response.status(error.status).send({ error: error.message})
+    return response.status(error.status).send({ error: error.message, status: error.status})
   }
 
 }
@@ -70,10 +69,10 @@ export async function deleteHandler(request, response){
 
     const result = deleteUser(decoded.email);
 
-    return response.status(200).send(result);
+    return response.status(200).send({result: result, status: 200});
 
   } catch (error) {
-    return response.status(error.status).send({ error: error.message });
+    return response.status(error.status).send({ error: error.message, status: error.status });
   }
 }
 
